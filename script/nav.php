@@ -46,21 +46,11 @@ function getUserTypeText($userTypeId) {
                             <a class="nav-link" href="../vue/ihm_global.php">Materiel</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Réserver</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Historique</a>
+                            <a class="nav-link" href="../vue/ihm_historique">Historique</a>
                         </li>
                     <?php endif; ?>
 
-                    <!-- Lien pour les Users -->
-                    <?php if ($_SESSION['user_type'] == 1): ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Réserver un article</a>
-                        </li>
-                    <?php endif; ?>
-
-                    <!-- Lien pour les Responsables -->
+                  <!-- Lien pour les Responsables -->
                     <?php if ($_SESSION['user_type'] == 2): ?>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Réservation totale</a>
@@ -75,7 +65,10 @@ function getUserTypeText($userTypeId) {
 
                     <!-- Lien commun pour tous les utilisateurs connectés -->
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Mes Réservations</a>
+                            <a class="nav-link" href="../vue/ihm_reservation.php">Réserver du materiel</a>
+                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../vue/ihm_reservation_personne.php">Mes Réservations</a>
                     </li>
 
                     <!-- Lien de déconnexion avec type et nom de l'utilisateur -->

@@ -267,13 +267,21 @@
     });
 
     $(document).on('click', '.edit-type-btn', function() {
-        var row = $(this).closest('tr');
-        var id = $(this).data('id');
-        var nom = row.find('td:nth-child(1)').text();
-        $('#editTypeId').val(id);
-        $('#editTypeNom').val(nom);
-        $('#editTypeMaterielModal').modal('show');
-    });
+    var row = $(this).closest('tr');
+    var id = $(this).data('id');
+    var nom = row.find('td:nth-child(1)').text();
+    
+    // Mettre à jour le champ caché avec l'ID du type de matériel
+    $('#editTypeId').val(id);
+    
+    // Afficher le nom du type de matériel dans le champ et dans le titre de la modale
+    $('#editTypeNom').val(nom);
+    $('#editTypeMaterielModalLabel').text('Modifier Type de Matériel : ' + nom);
+    
+    // Ouvrir la modale
+    $('#editTypeMaterielModal').modal('show');
+});
+
 
     $('#updateTypeMateriel').click(function() {
         var id = $('#editTypeId').val();

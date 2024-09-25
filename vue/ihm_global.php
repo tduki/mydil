@@ -8,21 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-     <style>
-        /* Code couleur pour le statut du matériel */
-        .status-disponible {
-            background-color: #28a745;
-            color: white;
-        }
-        .status-maintenance {
-            background-color: #ffc107;
-            color: black;
-        }
-        .status-hors-service {
-            background-color: #dc3545;
-            color: white;
-        }
-    </style>
+    
 </head>
 <body>
 
@@ -53,8 +39,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editStatusMaterielModalLabel">Modifier le status du matériel</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h5 class="modal-title" id="editStatusMaterielModalLabel">Modifier le status du matériel : <span id="nomMateriel"></span></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <input type="hidden" id="materielId"> <!-- Champ caché pour stocker l'ID du matériel -->
@@ -115,14 +101,26 @@
         // Charger les matériels au chargement de la page
         loadMateriels();
 
-        // Ouvrir la modal pour modifier le status du matériel
-        $(document).on('click', '.edit-status-btn', function() {
-            var id = $(this).data('id');
-            var status = $(this).data('status');
-            $('#materielId').val(id);
-            $('#statusMateriel').val(status);
-            $('#editStatusMaterielModal').modal('show');
-        });
+       // Ouvrir la modal pour modifier le status du matériel
+$(document).on('click', '.edit-status-btn', function() {
+    var id = $(this).data('id');
+    var status = $(this).data('status');
+    
+    // Récupérer le nom du matériel à partir du tableau
+    var nomMateriel = $(this).closest('tr').find('td:first').text();
+    
+    // Mettre à jour le champ caché de l'ID
+    $('#materielId').val(id);
+    
+    // Afficher le nom du matériel dans la modal
+    $('#nomMateriel').text(nomMateriel);
+    
+    // Pré-sélectionner le status dans la liste déroulante
+    $('#statusMateriel').val(status);
+    
+    // Ouvrir la modal
+    $('#editStatusMaterielModal').modal('show');
+});
 
         // Sauvegarder le status du matériel
         $('#saveStatusMateriel').click(function() {
