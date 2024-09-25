@@ -16,9 +16,17 @@ function getUserTypeText($userTypeId) {
 }
 ?>
 
+<style>
+    /* Ajout de la couleur bleu clair */
+    .navbar-custom {
+        background-color: #ADD8E6; /* Bleu clair */
+    }
+</style>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Mydil</a>
+        <a class="navbar-brand" href="#"> <img src="../img/logo.png" alt="Logo Mydil" width="90" height="80" class="d-inline-block align-text-top">
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -29,10 +37,13 @@ function getUserTypeText($userTypeId) {
                     <!-- Lien pour les Admins -->
                     <?php if ($_SESSION['user_type'] == 3): ?> 
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Panel</a>
+                            <a class="nav-link" href="../vue/ihm_admin.php">Panel</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Réservation totale</a>
+                            <a class="nav-link" href="../vue/ihm_config.php">Configuration materiel</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../vue/ihm_global.php">Materiel</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Réserver</a>

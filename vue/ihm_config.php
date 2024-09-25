@@ -7,7 +7,7 @@
     <!-- Lien vers le CSS de Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 
@@ -48,7 +48,7 @@
                 <tr>
                     <th>Nom du matériel</th>
                     <th>Type</th>
-                    <th>description</th>
+                    <th>Description</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -68,14 +68,13 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-            <div class="mb-3">
-    <label for="typeNom" class="form-label">Nom du Type</label>
-    <input type="text" class="form-control" id="typeNom">
-</div>
-
+                <div class="mb-3">
+                    <label for="typeNom" class="form-label">Nom du Type</label>
+                    <input type="text" class="form-control" id="typeNom">
+                </div>
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-primary" id="saveTypeMateriel">Ajouter</button>
+                <button type="button" class="btn btn-primary" id="saveTypeMateriel">Ajouter</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
             </div>
         </div>
@@ -91,7 +90,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <input type="hidden" id="editTypeId">  <!-- Pour stocker l'ID du type -->
+                <input type="hidden" id="editTypeId"> <!-- Pour stocker l'ID du type -->
                 <div class="mb-3">
                     <label for="editTypeNom" class="form-label">Nom du Type</label>
                     <input type="text" class="form-control" id="editTypeNom">
@@ -104,7 +103,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- Modal pour Ajouter Matériel -->
 <div class="modal fade" id="addMaterielModal" tabindex="-1" aria-labelledby="addMaterielModalLabel" aria-hidden="true">
@@ -120,12 +118,19 @@
                     <input type="text" class="form-control" id="materielNom">
                 </div>
                 <div class="mb-3">
-                    <label for="materielType" class="form-label">Type</label>
-                    <input type="text" class="form-control" id="materielType">
+                    <label for="materielType" class="form-label">Type de Matériel</label>
+                    <!-- Liste déroulante dynamique pour les types de matériel -->
+                    <select class="form-control" id="materielType">
+                        <option value="">Sélectionnez un type</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="materielDesc" class="form-label">Description</label>
+                    <textarea class="form-control" id="materielDesc"></textarea>
                 </div>
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-primary" id="saveMateriel">Ajouter</button>
+                <button type="button" class="btn btn-primary" id="saveMateriel">Ajouter</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
             </div>
         </div>
@@ -147,113 +152,291 @@
                 </div>
                 <div class="mb-3">
                     <label for="editMaterielType" class="form-label">Type</label>
-                    <input type="text" class="form-control" id="editMaterielType">
+                    <select class="form-control" id="editMaterielType">
+                        <option value="">Sélectionnez un type</option>
+                    </select>
                 </div>
                 <div class="mb-3">
-                    <label for="editMaterielType" class="form-label">Description</label>
-                    <input type="text" class="form-control" id="editMaterielType">
+                    <label for="editMaterielDesc" class="form-label">Description</label>
+                    <textarea class="form-control" id="editMaterielDesc"></textarea>
                 </div>
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-primary" id="updateMateriel">Enregistrer</button>
+                <button type="button" class="btn btn-primary" id="updateMateriel">Enregistrer</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
             </div>
         </div>
     </div>
 </div>
 
-
 <script>
-function chargTypeMateriel() {
-    $.ajax({
-        url: '../script/get_type_materiel.php',  // Le chemin vers ton script PHP qui récupère les types
-        type: 'GET',  // Utilisation de GET pour récupérer les données
-        success: function(response) {
-            var res = JSON.parse(response);
-            if (res.status === 'success') {
-                // Vider le tableau avant d'ajouter les nouvelles lignes
-                $('#typeMaterielTable').empty();
+    function chargTypeMateriel() {
+        $.ajax({
+            url: '../script/get_type_materiel.php',  
+            type: 'GET',
+            success: function(response) {
+                var res = JSON.parse(response);
+                if (res.status === 'success') {
+                    $('#typeMaterielTable').empty();
+                    res.data.forEach(function(type) {
+                        $('#typeMaterielTable').append(`
+                            <tr>
+                                <td>${type.libelle_materiel}</td>
+                                <td>
+                                    <button class="btn btn-warning btn-sm edit-type-btn" data-id="${type.id}" data-bs-toggle="modal" data-bs-target="#editTypeMaterielModal">Modifier</button>
+                                </td>
+                            </tr>
+                        `);
+                    });
+                } else {
+                    alert('Erreur : ' + res.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log('Erreur AJAX : ', error);
+                console.log(xhr.responseText);
+            }
+        });
+    }
 
-                // Boucle sur les résultats et ajouter chaque type au tableau
+    function chargMateriel() {
+        $.ajax({
+            url: '../script/get_materiel.php',
+            type: 'GET',
+            success: function(response) {
+                var res = (typeof response === "object") ? response : JSON.parse(response);
+                if (res.status === 'success') {
+                    $('#materielTable').empty();
+                    res.data.forEach(function(materiel) {
+                        $('#materielTable').append(`
+                            <tr>
+                                <td>${materiel.nom_materiel}</td>
+                                <td>${materiel.libelle_materiel}</td>
+                                <td>${materiel.description}</td>
+                                <td><button class="btn btn-warning btn-sm edit-materiel-btn" data-id="${materiel.id}">Modifier</button></td>
+                            </tr>
+                        `);
+                    });
+                } else {
+                    alert('Erreur lors du chargement des matériels : ' + res.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Erreur AJAX :', error);
+                console.error('Réponse du serveur :', xhr.responseText);
+            }
+        });
+    }
+
+    function chargTypeMaterielOptions(callback) {
+    $.ajax({
+        url: '../script/get_type_materiel.php',   // Script PHP qui récupère les types de matériel
+        type: 'GET',
+        success: function(response) {
+            var res = (typeof response === "object") ? response : JSON.parse(response);
+            if (res.status === 'success') {
+                $('#editMaterielType').empty();  // Vider la liste avant de la remplir
+                $('#editMaterielType').append('<option value="">Sélectionnez un type</option>');  // Option par défaut
                 res.data.forEach(function(type) {
-                    $('#typeMaterielTable').append(`
-                        <tr>
-                            <td>${type.libelle_materiel}</td>
-                            <td>
-                                <button class="btn btn-warning btn-sm edit-type-btn" data-id="${type.id}" data-bs-toggle="modal" data-bs-target="#editTypeMaterielModal">Modifier</button>
-                            </td>
-                        </tr>
+                    $('#editMaterielType').append(`
+                        <option value="${type.id}">${type.libelle_materiel}</option>
                     `);
                 });
+                if (typeof callback === 'function') {
+                    callback();  // Appeler le callback après avoir chargé les options
+                }
             } else {
                 alert('Erreur : ' + res.message);
             }
         },
         error: function(xhr, status, error) {
-            console.log('Erreur AJAX : ', error);
-            console.log(xhr.responseText);
+            console.log('Erreur AJAX :', error);
         }
     });
 }
 
 
+    $('#addMaterielModal').on('show.bs.modal', function() {
+        chargTypeMaterielOptions();
+    });
 
+    $(document).ready(function() {
+        chargTypeMateriel();  
+        chargTypeMaterielOptions(); 
+        chargMateriel();
+    });
 
-$(document).ready(function() {
-    chargTypeMateriel();   
-});
+    $(document).on('click', '.edit-type-btn', function() {
+        var row = $(this).closest('tr');
+        var id = $(this).data('id');
+        var nom = row.find('td:nth-child(1)').text();
+        $('#editTypeId').val(id);
+        $('#editTypeNom').val(nom);
+        $('#editTypeMaterielModal').modal('show');
+    });
 
-$(document).on('click', '.edit-type-btn', function() {
-    var row = $(this).closest('tr');
-    var id = $(this).data('id');  // Récupérer l'ID du type
-    var nom = row.find('td:nth-child(1)').text();  // Récupérer le nom du type
+    $('#updateTypeMateriel').click(function() {
+        var id = $('#editTypeId').val();
+        var typeNom = $('#editTypeNom').val().trim();
 
-    // Log des données récupérées
-    console.log('ID récupéré :', id);
-    console.log('Nom récupéré :', nom);
-
-    // Pré-remplir la modal avec l'ID et le nom actuels
-    $('#editTypeId').val(id);  // Stocker l'ID dans un champ caché
-    $('#editTypeNom').val(nom);  // Remplir le champ avec le nom actuel
-
-    // Ouvrir la modal
-    $('#editTypeMaterielModal').modal('show');
-});
-
-$(document).on('click', '#updateTypeMateriel', function() {
-    var id = $('#editTypeId').val();  // Récupérer l'ID
-    var typeNom = $('#editTypeNom').val().trim();  // Récupérer le nom
-
-    console.log('ID envoyé :', id);  // Vérifier que l'ID est récupéré
-    console.log('Nom envoyé :', typeNom);  // Vérifier que le nom est récupéré
-
-    if (typeNom && id) {
-        $.ajax({
-            url: '../script/update_type_materiel.php',  // Ton script PHP de mise à jour
-            type: 'POST',
-            data: {
-                id: id,  // Envoi de l'ID
-                typeNom: typeNom  // Envoi du nouveau nom
-            },
-            success: function(response) {
-                console.log('Réponse du serveur:', response);  // Log pour voir la réponse du serveur
-                try {
-                    var res = JSON.parse(response);  // Parse la réponse en JSON
+        if (typeNom && id) {
+            $.ajax({
+                url: '../script/update_type_materiel.php',
+                type: 'POST',
+                data: {
+                    id: id,
+                    typeNom: typeNom
+                },
+                success: function(response) {
+                    var res = JSON.parse(response);
                     if (res.status === 'success') {
-                        alert('Le type de matériel a été mis à jour avec succès.');
+                        alert('Le type de matériel a été mis à jour.');
                         $('#editTypeMaterielModal').modal('hide');
-                        chargTypeMateriel();  // Recharger la liste pour voir les changements
+                        chargTypeMateriel();
                     } else {
                         alert('Erreur de mise à jour : ' + res.message);
                     }
-                } catch (e) {
-                    console.log('Erreur de parsing JSON:', e);
-                    console.log('Réponse brute:', response);  // Si la réponse n'est pas en JSON, log la réponse brute
+                },
+                error: function(xhr, status, error) {
+                    console.log('Erreur AJAX :', error);
+                }
+            });
+        } else {
+            alert('Veuillez remplir tous les champs.');
+        }
+    });
+
+    $('#saveTypeMateriel').click(function() {
+        var typeNom = $('#typeNom').val().trim();
+
+        if (typeNom) {
+            $.ajax({
+                url: '../script/insert_type_materiel.php',
+                type: 'POST',
+                data: {
+                    typeNom: typeNom
+                },
+                success: function(response) {
+                    var res = JSON.parse(response);
+                    if (res.status === 'success') {
+                        alert(res.message);
+                        $('#addTypeMaterielModal').modal('hide');
+                        $('#typeNom').val('');
+                        chargTypeMateriel();
+                    } else {
+                        alert(res.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log('Erreur AJAX : ', error);
+                    console.log(xhr.responseText);
+                }
+            });
+        } else {
+            alert('Veuillez entrer un nom pour le type de matériel.');
+        }
+    });
+
+    $('#saveMateriel').click(function() {
+        var nom = $('#materielNom').val();
+        var type = $('#materielType').val();
+        var desc = $('#materielDesc').val();
+
+        if (nom && type && desc) {
+            $.ajax({
+                url: '../script/insert_materiel.php',
+                type: 'POST',
+                data: {
+                    nom: nom,
+                    type: type,
+                    description: desc
+                },
+                success: function(response) {
+                    var res = (typeof response === "string") ? JSON.parse(response) : response;  
+                    if (res.status === 'success') {
+                        alert(res.message);
+                        $('#addMaterielModal').modal('hide');
+                        $('#materielNom').val('');
+                        $('#materielType').val('');
+                        $('#materielDesc').val('');
+                        chargMateriel();
+                    } else {
+                        alert(res.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Erreur AJAX :', error);
+                    console.error('Réponse du serveur :', xhr.responseText);
+                }
+            });
+        } else {
+            alert('Veuillez remplir tous les champs.');
+        }
+    });
+
+// Fonction appelée lorsque l'on clique sur le bouton "Modifier" pour un matériel
+$(document).on('click', '.edit-materiel-btn', function() {
+    var row = $(this).closest('tr');
+    var id = $(this).data('id');  // Récupérer l'ID du matériel
+    var nom = row.find('td:nth-child(1)').text();  // Récupérer le nom du matériel
+    var type = row.find('td:nth-child(2)').text();  // Récupérer le type (libellé) du matériel
+    var desc = row.find('td:nth-child(3)').text();  // Récupérer la description du matériel
+
+    // Affichage des valeurs actuelles dans la modal
+    $('#editMaterielNom').val(nom);
+    $('#editMaterielDesc').val(desc);
+
+    // Charger les types de matériel dans le dropdown avec le type actuellement sélectionné
+    chargTypeMaterielOptions(function() {
+        // Il faut sélectionner l'option correspondant au type actuel du matériel
+        $('#editMaterielType option').each(function() {
+            if ($(this).text() === type) {
+                $(this).prop('selected', true);
+            }
+        });
+    });
+
+    // Stocker l'ID du matériel dans le bouton de sauvegarde
+    $('#updateMateriel').data('id', id);
+
+    // Ouvrir la modal
+    $('#editMaterielModal').modal('show');
+});
+
+
+$('#updateMateriel').click(function() {
+    var id = $(this).data('id');
+    var newNom = $('#editMaterielNom').val().trim();
+    var newType = $('#editMaterielType').val().trim();
+    var newDesc = $('#editMaterielDesc').val().trim();
+
+    if (newNom && newType && id) {
+        $.ajax({
+            url: '../script/update_materiel.php',
+            type: 'POST',
+            data: {
+                id: id,
+                nom: newNom,
+                type: newType,
+                description: newDesc
+            },
+            success: function(response) {
+                console.log("Réponse brute du serveur :", response);
+                
+                // Vérifie si la réponse est déjà un objet, sinon, parse en JSON
+                var res = (typeof response === "object") ? response : JSON.parse(response);
+
+                if (res.status === 'success') {
+                    alert('Matériel mis à jour.');
+                    $('#editMaterielModal').modal('hide');
+                    chargMateriel();
+                } else {
+                    alert('Erreur de mise à jour : ' + res.message);
                 }
             },
             error: function(xhr, status, error) {
-                console.log('Erreur AJAX :', error);  // Log pour détecter les erreurs AJAX
-                console.log(xhr.responseText);  // Log de la réponse en cas d'erreur
+                console.log('Erreur AJAX :', error);
+                console.log('Réponse du serveur :', xhr.responseText);
             }
         });
     } else {
@@ -262,69 +445,6 @@ $(document).on('click', '#updateTypeMateriel', function() {
 });
 
 
-$('#updateTypeMateriel').click(function() {
-    console.log('Bouton Enregistrer cliqué');  // Vérifie si ce log s'affiche
-    var id = $('#editTypeId').val();
-    var typeNom = $('#editTypeNom').val().trim();
-
-    if (typeNom && id) {
-        console.log('ID :', id);  // Vérifie l'ID
-        console.log('Type Nom :', typeNom);  // Vérifie le type de matériel
-    } else {
-        console.log('Données manquantes');  // Vérifie si les champs sont remplis
-    }
-});
-
-
-
-$('#saveTypeMateriel').click(function() {
-    var typeNom = $('#typeNom').val().trim();  // Utilise trim() pour éliminer les espaces
-    
-    console.log('Valeur récupérée :', typeNom);  // Vérification dans la console
-
-    if (typeNom) {
-        // Si le champ typeNom n'est pas vide, on continue avec l'envoi AJAX
-        var formData = new FormData();
-        formData.append('typeNom', typeNom);
-
-        $.ajax({
-            url: '../script/insert_type_materiel.php',
-            type: 'POST',
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function(response) {
-                console.log(response);
-                var res = JSON.parse(response);
-                if (res.status === 'success') {
-                    alert(res.message);
-
-                    // Ajouter au tableau et réinitialiser le champ
-                    $('#addTypeMaterielModal').modal('hide');
-                    $('#typeNom').val('');
-                    $('#typeMaterielTable').append(`
-                        <tr>
-                            <td>${typeNom}</td>
-                            <td><button class="btn btn-warning btn-sm edit-type-btn">Modifier</button></td>
-                        </tr>
-                    `);
-                } else {
-                    alert(res.message);
-                }
-            },
-            error: function(xhr, status, error) {
-                console.log('Erreur AJAX : ', error);
-                console.log(xhr.responseText);
-            }
-        });
-    } else {
-        // Si le champ typeNom est vide, on affiche un message d'alerte
-        alert('Veuillez entrer un nom pour le type de matériel.');
-    }
-});
-
-
-    // Gestion de l'affichage des sections
     $('#showTypeMateriel').click(function() {
         $('#typeMaterielSection').show();
         $('#materielSection').hide();
@@ -334,68 +454,6 @@ $('#saveTypeMateriel').click(function() {
         $('#materielSection').show();
         $('#typeMaterielSection').hide();
     });
-
-    // Ajouter un type de matériel depuis la modal
-    $('#saveTypeMateriel').click(function() {
-        var nom = $('#typeNom').val();
-        if(nom) {
-            $('#typeMaterielTable').append(`
-                <tr>
-                    <td>${nom}</td>
-                    <td><button class="btn btn-warning btn-sm edit-type-btn" data-bs-toggle="modal" data-bs-target="#editTypeMaterielModal">Modifier</button></td>
-                </tr>
-            `);
-            $('#addTypeMaterielModal').modal('hide');
-            $('#typeNom').val('');
-        }
-    });
-
-    // Ajouter un matériel depuis la modal
-    $('#saveMateriel').click(function() {
-        var nom = $('#materielNom').val();
-        var type = $('#materielType').val();
-        if(nom && type) {
-            $('#materielTable').append(`
-                <tr>
-                    <td>${nom}</td>
-                    <td>${type}</td>
-                    <td><button class="btn btn-warning btn-sm edit-materiel-btn" data-bs-toggle="modal" data-bs-target="#editMaterielModal">Modifier</button></td>
-                </tr>
-            `);
-            $('#addMaterielModal').modal('hide');
-            $('#materielNom').val('');
-            $('#materielType').val('');
-        }
-    });
-
-    // Fonction pour le bouton modifier (type de matériel)
-    $(document).on('click', '.edit-type-btn', function() {
-        var row = $(this).closest('tr');
-        var nom = row.find('td:nth-child(1)').text();
-        $('#editTypeNom').val(nom);
-        // Enregistrer les modifications
-        $('#updateTypeMateriel').off().click(function() {
-            row.find('td:nth-child(1)').text($('#editTypeNom').val());
-            $('#editTypeMaterielModal').modal('hide');
-        });
-    });
-
-    // Fonction pour le bouton modifier (matériel)
-    $(document).on('click', '.edit-materiel-btn', function() {
-        var row = $(this).closest('tr');
-        var nom = row.find('td:nth-child(1)').text();
-        var type = row.find('td:nth-child(2)').text();
-        $('#editMaterielNom').val(nom);
-        $('#editMaterielType').val(type);
-        // Enregistrer les modifications
-        $('#updateMateriel').off().click(function() {
-            row.find('td:nth-child(1)').text($('#editMaterielNom').val());
-            row.find('td:nth-child(2)').text($('#editMaterielType').val());
-            $('#editMaterielModal').modal('hide');
-        });
-    });
-
-   
 </script>
 
 </body>
