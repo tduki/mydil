@@ -10,8 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-
-<?php include "../script/nav.php"; ?>
+    <?php include "../script/nav.php"; ?>
 
 <div class="container mt-4">
     <h2 class="text-center">Gestion des Comptes Utilisateurs</h2>
@@ -55,8 +54,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                 <button type="button" class="btn btn-primary" id="saveUserGroup">Enregistrer</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
             </div>
         </div>
     </div>

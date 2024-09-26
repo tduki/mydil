@@ -73,7 +73,7 @@ $(document).ready(function() {
                 messageDiv.addClass('alert-success').text(response.message);
                 // Redirection après connexion réussie
                 setTimeout(function() {
-                    window.location.href = 'ihm_reservation.php'; // Rediriger vers la page d'accueil après connexion
+                    window.location.href = 'ihm_reservation.php';
                 }, 1000);
             } else {
                 messageDiv.addClass('alert-danger').text(response.message);

@@ -25,7 +25,7 @@ function getUserTypeText($userTypeId) {
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#"> <img src="../img/logo.png" alt="Logo Mydil" width="90" height="80" class="d-inline-block align-text-top">
+        <a class="navbar-brand" href="../vue/ihm_reservation.php"> <img src="../img/logo.png" alt="Logo Mydil" width="90" height="80" class="d-inline-block align-text-top">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -53,13 +53,13 @@ function getUserTypeText($userTypeId) {
                   <!-- Lien pour les Responsables -->
                     <?php if ($_SESSION['user_type'] == 2): ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Réservation totale</a>
+                            <a class="nav-link" href="../vue/ihm_config.php">Configuration materiel</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Réserver</a>
+                            <a class="nav-link" href="../vue/ihm_global.php">Materiel</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Historique</a>
+                            <a class="nav-link" href="../vue/ihm_historique">Historique</a>
                         </li>
                     <?php endif; ?>
 

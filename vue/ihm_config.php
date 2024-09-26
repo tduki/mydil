@@ -86,8 +86,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editTypeMaterielModalLabel">Modifier Type de Matériel</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h5 class="modal-title" id="editStatusMaterielModalLabel">Modifier le nom du matériel  <span id="nomMateriel"></span></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <input type="hidden" id="editTypeId"> <!-- Pour stocker l'ID du type -->
@@ -97,8 +97,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                 <button type="button" class="btn btn-primary" id="updateTypeMateriel">Enregistrer</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
             </div>
         </div>
     </div>
@@ -235,13 +235,24 @@
         success: function(response) {
             var res = (typeof response === "object") ? response : JSON.parse(response);
             if (res.status === 'success') {
-                $('#editMaterielType').empty();  // Vider la liste avant de la remplir
-                $('#editMaterielType').append('<option value="">Sélectionnez un type</option>');  // Option par défaut
+                // Vider les listes déroulantes avant de les remplir
+                $('#materielType').empty();  // Liste déroulante pour l'ajout de matériel
+                $('#editMaterielType').empty();  // Liste déroulante pour la modification de matériel
+                
+                // Option par défaut
+                $('#materielType').append('<option value="">Sélectionnez un type</option>');
+                $('#editMaterielType').append('<option value="">Sélectionnez un type</option>');
+                
+                // Remplir les deux listes déroulantes avec les types de matériel
                 res.data.forEach(function(type) {
+                    $('#materielType').append(`
+                        <option value="${type.id}">${type.libelle_materiel}</option>
+                    `);
                     $('#editMaterielType').append(`
                         <option value="${type.id}">${type.libelle_materiel}</option>
                     `);
                 });
+                
                 if (typeof callback === 'function') {
                     callback();  // Appeler le callback après avoir chargé les options
                 }
@@ -254,6 +265,7 @@
         }
     });
 }
+
 
 
     $('#addMaterielModal').on('show.bs.modal', function() {
@@ -463,6 +475,5 @@ $('#updateMateriel').click(function() {
         $('#typeMaterielSection').hide();
     });
 </script>
-
 </body>
 </html>

@@ -1,8 +1,8 @@
 <?php
 session_start(); // Démarrer la session
-include 'db_connexion.php'; // Inclure la connexion à la base de données
+include 'db_connexion.php'; 
 
-header('Content-Type: application/json'); // Définir la réponse en JSON
+header('Content-Type: application/json'); 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nom = $_POST['nom'] ?? '';

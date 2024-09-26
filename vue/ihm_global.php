@@ -21,7 +21,6 @@
             <tr>
                 <th>Nom du matériel</th>
                 <th>Status</th>
-                <th>État</th>
                 <th>Type de Matériel</th>
                 <th>Date début réservation</th>
                 <th>Date fin réservation</th>
@@ -54,8 +53,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                 <button type="button" class="btn btn-primary" id="saveStatusMateriel">Enregistrer</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
             </div>
         </div>
     </div>
@@ -76,7 +75,6 @@
                             <tr>
                                 <td>${materiel.nom_materiel}</td>
                                 <td>${materiel.status}</td>
-                                <td>${materiel.etat}</td>
                                 <td>${materiel.libelle_materiel}</td>
                                 <td>${materiel.date_debut ? materiel.date_debut : 'Non réservé'}</td>
                                 <td>${materiel.date_fin ? materiel.date_fin : 'Non réservé'}</td>

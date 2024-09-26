@@ -78,7 +78,6 @@ $(document).ready(function() {
     // Charger les réservations de l'utilisateur au chargement de la page
     loadUserReservations();
 });
-
 </script>
 
 </body>

@@ -69,33 +69,12 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                 <button type="button" class="btn btn-primary" id="saveReservation">Valider</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
             </div>
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <script>
     // Charger les types de matériel pour la liste déroulante
@@ -164,8 +143,7 @@
             console.log(xhr.responseText);
         }
     });
-}
-
+ }
 
     $(document).ready(function() {
     // Charger les types de matériel au chargement de la page
@@ -233,7 +211,6 @@
 });
 
 });
-
 </script>
 
 </body>
