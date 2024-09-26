@@ -1,16 +1,11 @@
 <?php
-// Activer les erreurs PHP pour le débogage
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
-header('Content-Type: application/json');  // Toujours envoyer un JSON
+header('Content-Type: application/json');  
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Inclure la connexion à la base de données
-    include 'db_connexion.php';  // Vérifiez bien que ce chemin est correct
+    
+    include 'db_connexion.php';  
 
-    // Récupérer les données envoyées en POST
     $id = $_POST['id'];
     $status = $_POST['status'];
 

@@ -1,18 +1,17 @@
 <?php
-// Vérifier si la méthode est POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['status' => 'error', 'message' => 'Méthode non autorisée']);
     exit;
 }
 
-include 'db_connexion.php';  // Inclure la connexion à la base de données
+include 'db_connexion.php'; 
 
-// Récupérer les données POST
+// Récupérer les données 
 $nom_materiel = $_POST['nom'] ?? null;
 $type_materiel = $_POST['type'] ?? null;
 $description = $_POST['description'] ?? null;
 
-// Assigner des valeurs par défaut pour status et etat
+// valeurs par défaut pour status et etat dispo apres la création
 $status = 'Disponible';
 $etat = 'disponible';
 

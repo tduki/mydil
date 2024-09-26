@@ -5,9 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id = isset($_POST['id']) ? $_POST['id'] : null;
     $typeNom = isset($_POST['typeNom']) ? $_POST['typeNom'] : null;
 
-    // Log des données reçues pour vérification
-    error_log("Données reçues: ID = $id, Nom = $typeNom");
-
+   
     if ($id && $typeNom) {
         try {
             // Préparer la requête de mise à jour

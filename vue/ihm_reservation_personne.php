@@ -39,7 +39,7 @@
 // Charger les réservations de l'utilisateur
 function loadUserReservations() {
     $.ajax({
-        url: '../script/get_user_reservations.php',  // URL pour récupérer les réservations de l'utilisateur
+        url: '../script/get_user_reservations.php', 
         type: 'GET',
         success: function(response) {
             var res = (typeof response === "object") ? response : JSON.parse(response); 
@@ -73,12 +73,10 @@ function loadUserReservations() {
         }
     });
 }
-
 $(document).ready(function() {
     // Charger les réservations de l'utilisateur au chargement de la page
     loadUserReservations();
 });
 </script>
-
 </body>
 </html>

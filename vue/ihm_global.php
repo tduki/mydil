@@ -146,6 +146,5 @@ $(document).on('click', '.edit-status-btn', function() {
         });
     });
 </script>
-
 </body>
 </html>

@@ -1,17 +1,16 @@
 <?php
-// Inclure le fichier de connexion à la base de données
 include("db_connexion.php");
 
 try {
-    // Préparer la requête de sélection
+    // preparer la requête de selection
     $sql = "SELECT * FROM type_materiel";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
 
-    // Récupérer tous les résultats
+    // recuperer tous les resultats
     $types = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Retourner les résultats en format JSON
+    // retourner les resultats en format JSON
     echo json_encode(['status' => 'success', 'data' => $types]);
 } catch (PDOException $e) {
     // Si une erreur survient, retourner une réponse JSON avec l'erreur

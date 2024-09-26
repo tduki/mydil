@@ -16,13 +16,6 @@ function getUserTypeText($userTypeId) {
 }
 ?>
 
-<style>
-    /* Ajout de la couleur bleu clair */
-    .navbar-custom {
-        background-color: #ADD8E6; /* Bleu clair */
-    }
-</style>
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="../vue/ihm_reservation.php"> <img src="../img/logo.png" alt="Logo Mydil" width="90" height="80" class="d-inline-block align-text-top">
@@ -71,7 +64,7 @@ function getUserTypeText($userTypeId) {
                         <a class="nav-link" href="../vue/ihm_reservation_personne.php">Mes Réservations</a>
                     </li>
 
-                    <!-- Lien de déconnexion avec type et nom de l'utilisateur -->
+                    <!-- Lien de déconnexion avec type de l'utilisateur -->
                     <li class="nav-item">
                         <a class="nav-link" href="../script/deconnexion.php">
                             Déconnexion (<?= getUserTypeText($_SESSION['user_type']) ?>)

@@ -2,6 +2,6 @@
 session_start();
 session_unset();
 session_destroy();
-header('Location: ../vue/ihm_connexion.php');
+header('Location: ../vue/ihm_connexion.php'); 
 exit();
 ?>

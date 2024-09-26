@@ -65,7 +65,7 @@ $(document).ready(function() {
             password: $('#password').val()
         }, function(response) {
             // Afficher le message
-            console.log("Réponse brute : ", response);  // Vérifier la réponse JSON brute
+            console.log("Réponse brute : ", response);  
             const messageDiv = $('#message');
             messageDiv.removeClass('d-none alert-danger alert-success');
 
@@ -74,7 +74,7 @@ $(document).ready(function() {
                 // Redirection après connexion réussie
                 setTimeout(function() {
                     window.location.href = 'ihm_reservation.php';
-                }, 1000);
+                }, 500);
             } else {
                 messageDiv.addClass('alert-danger').text(response.message);
             }

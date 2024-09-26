@@ -1,26 +1,24 @@
 <?php
-// Vérifier si la méthode est POST
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['status' => 'error', 'message' => 'Méthode non autorisée']);
     exit;
 }
 
-header('Content-Type: application/json');  // Spécifie que la réponse renvoyée est du JSON
-include 'db_connexion.php';  // Inclure la connexion PDO
+header('Content-Type: application/json'); 
 
-// Récupérer les données envoyées via POST
+include 'db_connexion.php'; 
+
 $id = $_POST['id'];
 $nom = $_POST['nom'];
 $type = $_POST['type'];
 $description = $_POST['description'];
 
-// Log les données reçues (utile pour le débogage)
-error_log("Données reçues : ID = $id, Nom = $nom, Type = $type, Description = $description");
 
-// Vérifier que tous les champs sont présents
+// Vérifier que tous les champs sont présents et complet
 if (!empty($id) && !empty($nom) && !empty($type)) {
     try {
-        // Préparer la requête de mise à jour avec PDO
+        // Préparer la requête de mise à jour du materiel
         $query = "UPDATE materiel SET nom_materiel = :nom, fk_type_materiel = :type, description = :description WHERE id = :id";
         $stmt = $pdo->prepare($query);
         

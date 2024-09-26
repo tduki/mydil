@@ -1,7 +1,6 @@
 <?php
 header('Content-Type: application/json; charset=UTF-8');
 
-// Inclure la connexion à la base de données
 include 'db_connexion.php';
 
 try {

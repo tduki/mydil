@@ -67,7 +67,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
-
 $(document).ready(function() {
     $('#inscriptionForm').on('submit', function(event) {
         event.preventDefault(); // Empêche le rechargement de la page
@@ -79,8 +78,6 @@ $(document).ready(function() {
             email: $('#email').val(),
             password: $('#password').val()
         };
-
-        // Envoi des données via AJAX
         $.ajax({
             url: '../script/insert_inscription.php', 
             type: 'POST',
@@ -106,8 +103,6 @@ $(document).ready(function() {
         });
     });
 });
-</script>
-
 </script>
 </body>
 </html>

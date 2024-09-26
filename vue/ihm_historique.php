@@ -55,7 +55,7 @@
     // Charger les types de matériel pour la liste déroulante
     function loadTypesMateriel() {
         $.ajax({
-            url: '../script/get_type_materiel.php',  // URL pour récupérer les types de matériel
+            url: '../script/get_type_materiel.php',  
             type: 'GET',
             success: function(response) {
                 var res = (typeof response === "string") ? JSON.parse(response) : response;  
@@ -83,7 +83,7 @@
         type: 'GET',
         data: { typeId: typeId },
         success: function(response) {
-    console.log("Réponse reçue du serveur :", response);  // Ajouter cette ligne pour afficher la réponse du serveur
+    console.log("Réponse reçue du serveur :", response);  
     var res = (typeof response === "string") ? JSON.parse(response) : response;
     $('#materiel').empty();  // Vider la liste déroulante avant de la remplir
     if (res.status === 'success') {
@@ -95,17 +95,13 @@
         alert('Erreur : ' + res.message);
         console.log('Réponse reçue avec erreur:', response);
     }
-
 },
-
         error: function(xhr, status, error) {
             console.log('Erreur AJAX :', error);
             console.log('Réponse du serveur :', xhr.responseText);
         }
     });
 }
-
-
     $(document).ready(function() {
         loadTypesMateriel();
 
@@ -119,8 +115,6 @@
         $('#materiel').append('<option value="">Choisir un appareil</option>');
     }
 });
-
-
         // Télécharger le PDF avec l'historique
         $('#downloadPDF').click(function() {
             var materielId = $('#materiel').val();
@@ -131,11 +125,9 @@
                 alert('Veuillez sélectionner toutes les informations nécessaires.');
                 return;
             }
-
             window.location.href = `../script/generer_pdf.php?materiel_id=${materielId}&date_debut=${dateDebut}&date_fin=${dateFin}`;
         });
     });
 </script>
-
 </body>
 </html>

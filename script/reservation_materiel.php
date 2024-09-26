@@ -2,15 +2,15 @@
 include 'db_connexion.php';
 session_start();
 
-header('Content-Type: application/json'); // S'assurer que la réponse est en JSON
+header('Content-Type: application/json'); 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $idMateriel = $_POST['id_materiel'];
     $dateDebut = $_POST['date_debut'];
     $dateFin = $_POST['date_fin'];
     $raison = $_POST['raison'];
-    $userId = $_SESSION['user_id'];  // Assurez-vous que l'ID de l'utilisateur est stocké dans la session
-
+    $userId = $_SESSION['user_id']; 
+    
     if (!empty($idMateriel) && !empty($dateDebut) && !empty($dateFin) && !empty($raison) && !empty($userId)) {
         try {
             // Mettre à jour le matériel comme "Réservé"

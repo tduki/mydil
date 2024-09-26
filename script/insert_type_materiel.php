@@ -1,16 +1,15 @@
 <?php
-// Inclure le fichier de connexion à la base de données
+
 include("db_connexion.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    error_log("Requête AJAX reçue");  // Ajouter ceci pour voir si le serveur reçoit la requête
+    error_log("Requête AJAX reçue");  
 
-    // Vérifier si le champ typeNom est défini
+    // Vérifier si le champ typeNom est défini et rempli
     if (isset($_POST['typeNom']) && !empty($_POST['typeNom'])) {
         // Récupérer la valeur du typeNom
         $typeNom = trim($_POST['typeNom']);
-        error_log("Nom du type : " . $typeNom);  // Log pour vérifier la valeur de typeNom
-
+      
         try {
             // Préparer la requête d'insertion
             $sql = "INSERT INTO type_materiel (libelle_materiel) VALUES (:libelle_materiel)";

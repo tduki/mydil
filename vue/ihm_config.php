@@ -12,14 +12,13 @@
 <body>
 
 <?php include "../script/nav.php"; ?>
-<h2 class="text-center mb-4">Configuration Matériel</h2>
 
+<h2 class="text-center mb-4">Configuration Matériel</h2>
 <div class="container text-center">
     <div class="mb-4">
         <button class="btn btn-primary" id="showTypeMateriel">Créer/Modifier type de matériel</button>
         <button class="btn btn-secondary" id="showMateriel">Ajouter/Modifier le matériel</button>
     </div>
-
     <!-- Section Type de Matériel (cachée par défaut) -->
     <div class="mb-4" id="typeMaterielSection" style="display: none;">
         <h3>Type de Matériel</h3>
@@ -170,6 +169,7 @@
 </div>
 
 <script>
+    // fonction pour le type materiel soit charge sur la page
     function chargTypeMateriel() {
         $.ajax({
             url: '../script/get_type_materiel.php',  
@@ -198,7 +198,7 @@
             }
         });
     }
-
+    // fonction pour le materiel soit charge sur la page
     function chargMateriel() {
         $.ajax({
             url: '../script/get_materiel.php',
@@ -228,9 +228,10 @@
         });
     }
 
+    // fonction pour recupere le type de materiel
     function chargTypeMaterielOptions(callback) {
     $.ajax({
-        url: '../script/get_type_materiel.php',   // Script PHP qui récupère les types de matériel
+        url: '../script/get_type_materiel.php',   
         type: 'GET',
         success: function(response) {
             var res = (typeof response === "object") ? response : JSON.parse(response);
@@ -251,8 +252,7 @@
                     $('#editMaterielType').append(`
                         <option value="${type.id}">${type.libelle_materiel}</option>
                     `);
-                });
-                
+                });                
                 if (typeof callback === 'function') {
                     callback();  // Appeler le callback après avoir chargé les options
                 }
@@ -265,8 +265,6 @@
         }
     });
 }
-
-
 
     $('#addMaterielModal').on('show.bs.modal', function() {
         chargTypeMaterielOptions();
@@ -290,7 +288,7 @@
     $('#editTypeNom').val(nom);
     $('#editTypeMaterielModalLabel').text('Modifier Type de Matériel : ' + nom);
     
-    // Ouvrir la modale
+    // Ouvrir la modal
     $('#editTypeMaterielModal').modal('show');
 });
 
@@ -399,7 +397,7 @@ $(document).on('click', '.edit-materiel-btn', function() {
     var row = $(this).closest('tr');
     var id = $(this).data('id');  // Récupérer l'ID du matériel
     var nom = row.find('td:nth-child(1)').text();  // Récupérer le nom du matériel
-    var type = row.find('td:nth-child(2)').text();  // Récupérer le type (libellé) du matériel
+    var type = row.find('td:nth-child(2)').text();  // Récupérer le type du matériel
     var desc = row.find('td:nth-child(3)').text();  // Récupérer la description du matériel
 
     // Affichage des valeurs actuelles dans la modal
@@ -463,7 +461,6 @@ $('#updateMateriel').click(function() {
         alert('Veuillez remplir tous les champs.');
     }
 });
-
 
     $('#showTypeMateriel').click(function() {
         $('#typeMaterielSection').show();

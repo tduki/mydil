@@ -10,6 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
+    <!-- inclut le nav -->
     <?php include "../script/nav.php"; ?>
 
 <div class="container mt-4">
@@ -33,7 +34,6 @@
         </table>
     </div>
 </div>
-
 <!-- Modal pour Modifier le groupe de l'utilisateur -->
 <div class="modal fade" id="editUserGroupModal" tabindex="-1" aria-labelledby="editUserGroupModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -65,11 +65,11 @@
 // Charger la liste des utilisateurs
 function loadUsers() {
     $.ajax({
-        url: '../script/get_users.php',  // URL pour récupérer la liste des utilisateurs
+        url: '../script/get_users.php', 
         type: 'GET',
         success: function(response) {
-            var res = (typeof response === "object") ? response : JSON.parse(response);
-            $('#userTable tbody').empty();  // Vider le tableau avant de le remplir
+            var res = (typeof response === "object") ? response : JSON.parse(response); // soit response est un objet ou sinon elle est convertie en objet js si c'est une chaine de texte json
+            $('#userTable tbody').empty();  // Vider le tableau 
 
             if (res.status === 'success' && res.data.length > 0) {
                 // Ajouter les utilisateurs au tableau
@@ -102,7 +102,6 @@ function loadUsers() {
     });
 }
 
-
 $(document).ready(function() {
     // Charger la liste des utilisateurs au chargement de la page
     loadUsers();
@@ -113,7 +112,7 @@ $(document).ready(function() {
         var group = $(this).data('group');
 
         $('#userId').val(id);  // Stocker l'ID de l'utilisateur dans la modal
-        $('#userGroup').val(group);  // Pré-sélectionner le groupe dans la liste déroulante
+        $('#userGroup').val(group);  // Pré-sélectionner le groupe
         $('#editUserGroupModal').modal('show');
     });
 
@@ -144,6 +143,5 @@ $(document).ready(function() {
     });
 });
 </script>
-
 </body>
 </html>

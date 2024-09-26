@@ -1,11 +1,12 @@
 <?php
+
 session_start();
-include 'db_connexion.php'; // Inclure la connexion à la base de données
 
-// Démarrer le tampon de sortie pour capturer tout texte parasite
+include 'db_connexion.php';
+
+// demarrer le tampon de sortie pour capturer tout texte parasite
 ob_start();
-
-// Définir le header pour envoyer uniquement du JSON
+// renvoie un format json pour la page
 header('Content-Type: application/json'); 
 
 try {
@@ -13,7 +14,7 @@ try {
         $email = $_POST['email'] ?? '';
         $password = $_POST['password'] ?? '';
 
-        // Vérification des champs
+        // verification des champs
         if (empty($email) || empty($password)) {
             // Nettoyer le tampon de sortie et envoyer une réponse JSON
             ob_clean();  // Nettoie tout texte parasite
@@ -21,7 +22,7 @@ try {
             exit;
         }
 
-        // Vérifier si l'utilisateur existe dans la base de données
+        // verifier si l'utilisateur existe dans la base de données
         $sql = "SELECT * FROM identifiants WHERE email = :email";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([':email' => $email]);
@@ -54,3 +55,5 @@ try {
 // Fermer le tampon de sortie
 ob_end_flush();
 exit;
+
+?>

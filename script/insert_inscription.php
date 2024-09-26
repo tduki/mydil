@@ -1,5 +1,6 @@
 <?php
 session_start(); // Démarrer la session
+
 include 'db_connexion.php'; 
 
 header('Content-Type: application/json'); 
@@ -9,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $prenom = $_POST['prenom'] ?? '';
     $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
-    $type_user = 1; // Type utilisateur par défaut
+    $type_user = 1; // Type user par défaut
 
     if (empty($nom) || empty($prenom) || empty($email) || empty($password)) {
         echo json_encode(['success' => false, 'message' => 'Tous les champs sont requis.']);
@@ -29,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Hacher le mot de passe
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
-    // Insérer les données dans la table
+    // Insértion des données 
     $sql = "INSERT INTO identifiants (nom, prenom, email, mdp, fk_type_user) 
             VALUES (:nom, :prenom, :email, :mdp, :type_user)";
     try {
@@ -47,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Créer la session utilisateur après inscription réussie
         $_SESSION['user_id'] = $user_id;
-        $_SESSION['user_type'] = $type_user; // Vous pouvez ajuster selon les besoins
+        $_SESSION['user_type'] = $type_user;
 
         // Réponse de succès
         echo json_encode(['success' => true, 'message' => 'Inscription réussie !']);

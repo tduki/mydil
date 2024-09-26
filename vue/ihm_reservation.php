@@ -80,7 +80,7 @@
     // Charger les types de matériel pour la liste déroulante
     function loadTypesMateriel() {
         $.ajax({
-            url: '../script/get_type_materiel.php',  // URL pour récupérer les types de matériel
+            url: '../script/get_type_materiel.php', 
             type: 'GET',
             success: function(response) {
                 var res = JSON.parse(response);
@@ -106,7 +106,7 @@
     // Charger les matériels disponibles en fonction du type sélectionné
  function loadMaterielsDisponibles(typeId = '') {
     $.ajax({
-        url: '../script/get_materiels_disponibles.php',  // URL pour récupérer les matériels disponibles
+        url: '../script/get_materiels_disponibles.php',  
         type: 'GET',
         data: { typeId: typeId },  // Envoyer l'ID du type de matériel si un type est sélectionné
         success: function(response) {
@@ -144,7 +144,6 @@
         }
     });
  }
-
     $(document).ready(function() {
     // Charger les types de matériel au chargement de la page
     loadTypesMateriel();
@@ -177,7 +176,6 @@
     var dateDebut = $('#dateDebut').val();
     var dateFin = $('#dateFin').val();
     var raison = $('#raisonReservation').val();
-
     $.ajax({
         url: '../script/reservation_materiel.php',
         type: 'POST',
@@ -209,9 +207,7 @@
         }
     });
 });
-
 });
 </script>
-
 </body>
 </html>
